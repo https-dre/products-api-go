@@ -2,6 +2,7 @@ package controller
 
 import (
 	"go-api/usecase"
+	"go-api/model"
 	"github.com/gin-gonic/gin"
 )
 type ProductController struct {
@@ -21,4 +22,24 @@ func (p * ProductController) GetProducts(ctx *gin.Context) {
 	}
 
 	ctx.JSON(200, products)
+}
+
+func (p *ProductController) CreateProduct(ctx *gin.Context) {
+	var product model.Product
+
+	err := ctx.BindJSON(&product)
+
+	if err != nil {
+		ctx.JSON(400, err)
+		return
+	}
+
+	insertedProduct, err := p.productUsecase.CreateProduct(product)
+
+	if err != nil {
+		ctx.JSON(500, err)
+		return
+	}
+
+	ctx.JSON(201, insertedProduct)
 }

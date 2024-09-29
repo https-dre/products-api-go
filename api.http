@@ -2,3 +2,12 @@ GET http://localhost:8000/ping HTTP/1.1
 
 ### /products
 GET http://localhost:8000/products HTTP/1.1
+
+### /add-products
+POST http://localhost:8000/create-products
+Content-Type: application/json; charset=utf-8
+
+{
+    "product_name": "Suco de Laranja Xandô",
+    "product_price": 23.50
+}
