@@ -1,8 +1,10 @@
 package controller
 
 import (
-	"go-api/usecase"
 	"go-api/model"
+	"go-api/usecase"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 type ProductController struct {
@@ -42,4 +44,32 @@ func (p *ProductController) CreateProduct(ctx *gin.Context) {
 	}
 
 	ctx.JSON(201, insertedProduct)
+}
+
+func (p *ProductController) GetProductById(ctx *gin.Context) {
+	id := ctx.Param("productId")
+
+	if id == "" {
+		ctx.JSON(400, model.Response{Message: "id cannot be null"})
+		return
+	}
+
+	productId, err := strconv.Atoi(id)
+	if err != nil {
+		ctx.JSON(400, model.Response{Message: "product id should be an integer"})
+		return
+	}
+
+	product, err := p.productUsecase.GetProductById(productId)
+	if err != nil {
+		ctx.JSON(500, model.Response{Message: "internal server error"})
+		return
+	}
+
+	if product == nil {
+		ctx.JSON(404, model.Response{Message: "product not found"})
+		return
+	}
+
+	ctx.JSON(200, product)
 }
