@@ -25,5 +25,5 @@ Content-Type: application/json; charset=utf-8
 
 #### Encontrar um produto por Id
 ```http
-GET http://localhost:8000/product-by-id/5 HTTP/1.1
+GET http://host/product-by-id/5 HTTP/1.1
 ```
