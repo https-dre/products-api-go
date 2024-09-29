@@ -28,5 +28,7 @@ func main() {
 
 	server.POST("/create-products", ProductController.CreateProduct)
 
+	server.GET("/product-by-id/:productId", ProductController.GetProductById)
+
 	server.Run(":8000")
 }
